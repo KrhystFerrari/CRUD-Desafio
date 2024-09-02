@@ -1,4 +1,4 @@
-const Task = require('../models/Task');
+const Task = require("../models/Task");
 
 exports.getTasks = async (req, res) => {
   try {
@@ -21,7 +21,9 @@ exports.createTask = async (req, res) => {
 
 exports.updateTask = async (req, res) => {
   try {
-    const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
     res.status(200).json(updatedTask);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -31,7 +33,7 @@ exports.updateTask = async (req, res) => {
 exports.deleteTask = async (req, res) => {
   try {
     await Task.findByIdAndDelete(req.params.id);
-    res.status(200).json({ message: 'Task deleted successfully' });
+    res.status(200).json({ message: "Task deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

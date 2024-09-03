@@ -1,8 +1,44 @@
-# React + Vite
+# Projeto CRUD Desafio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este é um projeto de CRUD desenvolvido em Vite, JavaScript, React e Material UI. Backend Desenvolvido com Express e MongoDB.
 
-Currently, two official plugins are available:
+## Instalação
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Para instalar as dependências do backend, execute os seguintes comandos na pasta "server":
+
+```
+cd server
+npm install
+```
+
+Para instalar as dependências do frontend, execute os seguintes comandos na pasta raiz do projeto:
+
+```
+git clone <URL_DO_PROJETO>
+cd CRUD-Desafio
+npm install
+```
+
+## Executando a aplicação
+
+Para rodar o backend, utilize o seguinte comando na pasta "server":
+
+```
+cd server
+node app.js
+```
+
+Para rodar o frontend, utilize o seguinte comando na pasta raiz do projeto:
+
+```
+npm run dev
+```
+
+## Testes
+
+Para executar os testes do backend, utilize o seguinte comando na pasta "server":
+
+```
+cd server
+npm test
+```

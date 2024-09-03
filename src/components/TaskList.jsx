@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   List,
   ListItem,
@@ -5,33 +6,50 @@ import {
   IconButton,
   Box,
   Typography,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Button,
   useTheme,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import CloseIcon from "@mui/icons-material/Close";
 import { deleteTask } from "../services/taskService";
 
 const TaskList = ({ tasks, setTasks, onEdit }) => {
   const theme = useTheme();
+  const [open, setOpen] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
 
-  const handleDelete = (id) => {
-    deleteTask(id)
-      .then(() => {
-        setTasks(tasks.filter((task) => task._id !== id));
-      })
-      .catch((error) => {
-        console.error("Failed to delete the task:", error);
-      });
+  const handleDeleteClick = (task) => {
+    setSelectedTask(task);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedTask(null);
+  };
+
+  const handleConfirmDelete = () => {
+    if (selectedTask) {
+      deleteTask(selectedTask._id)
+        .then(() => {
+          setTasks(tasks.filter((task) => task._id !== selectedTask._id));
+          handleClose();
+        })
+        .catch((error) => {
+          console.error("Failed to delete the task:", error);
+        });
+    }
   };
 
   return (
-    <List sx={{ minWidth: "30vw" }}>
-      {tasks.map((task) => {
-        const truncatedDescription =
-          task.description.length > 120
-            ? task.description.substring(0, 120) + "..."
-            : task.description;
-        return (
+    <>
+      <List sx={{ minWidth: "30vw" }}>
+        {tasks.map((task) => (
           <ListItem
             key={task._id}
             sx={{
@@ -41,7 +59,7 @@ const TaskList = ({ tasks, setTasks, onEdit }) => {
               marginBottom: "8px",
             }}
           >
-            <Box sx={{ flexGrow: 1, maxWidth: "80%" }}>
+            <Box sx={{ flexGrow: 1 }}>
               <ListItemText
                 primary={
                   <Typography
@@ -61,10 +79,9 @@ const TaskList = ({ tasks, setTasks, onEdit }) => {
                     sx={{
                       color: "text.secondary",
                       textTransform: "capitalize",
-                      wordWrap: "break-word",
                     }}
                   >
-                    {truncatedDescription}
+                    {task.description}
                   </Typography>
                 }
               />
@@ -82,15 +99,49 @@ const TaskList = ({ tasks, setTasks, onEdit }) => {
               <IconButton
                 edge="end"
                 aria-label="delete"
-                onClick={() => handleDelete(task._id)}
+                onClick={() => handleDeleteClick(task)}
               >
                 <DeleteIcon color="error" />
               </IconButton>
             </Box>
           </ListItem>
-        );
-      })}
-    </List>
+        ))}
+      </List>
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="confirm-delete-title"
+      >
+        <DialogTitle id="confirm-delete-title" marginBottom={1}>
+          Confirmar Exclusão
+          <IconButton
+            edge="end"
+            aria-label="close"
+            onClick={handleClose}
+            sx={{
+              position: "absolute",
+              right: 9,
+              top: 0,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <Typography variant="body3">Você realmente deseja excluir esta tarefa?</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancelar
+          </Button>
+          <Button onClick={handleConfirmDelete} color="error">
+            Excluir
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
 

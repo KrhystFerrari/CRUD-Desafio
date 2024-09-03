@@ -6,11 +6,13 @@ import {
   Paper,
   Button,
   TextField,
+  useTheme,
 } from "@mui/material";
 import TaskList from "../components/TaskList";
 import { getTasks, createTask, updateTask } from "../services/taskService";
 
 const Home = () => {
+  const theme = useTheme();
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState({ title: "", description: "" });
   const [editingTask, setEditingTask] = useState(null);
@@ -44,13 +46,36 @@ const Home = () => {
   };
 
   return (
-    <Container>
-      <Typography variant="h4" gutterBottom>
+    <Container
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100vh",
+      }}
+    >
+      <Typography
+        variant="h3"
+        fontWeight={600}
+        marginBottom={4}
+        textAlign={"center"}
+        gutterBottom
+      >
         Task Management
       </Typography>
-      <Grid container spacing={3}>
+      <Grid
+        container
+        spacing={3}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <Grid item xs={12} md={6}>
-          <Paper style={{ padding: "16px" }}>
+          <Paper sx={{ padding: "20px" }}>
             <TextField
               label="Task Title"
               fullWidth
@@ -73,14 +98,24 @@ const Home = () => {
             />
             <Button
               variant="contained"
-              color="primary"
               onClick={handleCreateTask}
+              color={theme.palette.mode === "dark" ? "info" : "primary"}
             >
               {editingTask ? "Update Task" : "Add Task"}
             </Button>
           </Paper>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid
+          item
+          xs={12}
+          md={6}
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
           <TaskList tasks={tasks} setTasks={setTasks} onEdit={handleEdit} />
         </Grid>
       </Grid>

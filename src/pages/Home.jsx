@@ -62,7 +62,7 @@ const Home = () => {
         textAlign={"center"}
         gutterBottom
       >
-        Task Management
+        Organizador de Tarefas
       </Typography>
       <Grid
         container
@@ -77,7 +77,7 @@ const Home = () => {
         <Grid item xs={12} md={6}>
           <Paper sx={{ padding: "20px" }}>
             <TextField
-              label="Task Title"
+              label="Nome da Tarefa"
               fullWidth
               value={newTask.title}
               onChange={(e) =>
@@ -86,7 +86,7 @@ const Home = () => {
               margin="normal"
             />
             <TextField
-              label="Task Description"
+              label="Descrição da Tarefa"
               fullWidth
               multiline
               rows={4}
@@ -101,7 +101,7 @@ const Home = () => {
               onClick={handleCreateTask}
               color={theme.palette.mode === "dark" ? "info" : "primary"}
             >
-              {editingTask ? "Update Task" : "Add Task"}
+              {editingTask ? "Atualizar" : "Adicionar"}
             </Button>
           </Paper>
         </Grid>

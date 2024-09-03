@@ -10,6 +10,7 @@ import {
 import Home from "./pages/Home";
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import ModeNightIcon from "@mui/icons-material/ModeNight";
+import Footer from "./components/Footer";
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -54,10 +55,13 @@ const App = () => {
         >
           <FormControlLabel
             control={<Switch checked={darkMode} onChange={handleThemeChange} />}
-            label={darkMode ? <ModeNightIcon /> : <WbSunnyIcon />}
+            label={
+              darkMode ? <ModeNightIcon /> : <WbSunnyIcon color="warning" />
+            }
           />
         </Box>
         <Home />
+        <Footer />
       </Box>
     </ThemeProvider>
   );
